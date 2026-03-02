@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <script src="app.js"></script>
-
-    <h1>Gestion De Tâches</h1>
-    <div>
-        <input type="text" id="tâche" placeholder="Ajouter une nouvelle tâche">
-        <button id="addTâche">Ajouter</button>
+   
+    <div class = "container">
+      <h1>To-Do List</h1>
+    
+        <input type="text" id="todo-input" placeholder="Ajouter une nouvelle tâche">
+        <button onclick="addtodo()">Ajouter</button>
+   
+        <ul id="todo-list"></ul>
     </div>
-    <div>
-        <ul id=TâchesListe></ul>
-    </div>
+        <script src="app.js"></script>
 </body>
 </html>
