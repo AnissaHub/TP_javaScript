@@ -1,106 +1,50 @@
-// Sélectionner les éléments du DOM
-const addtodo = document.querySelector("#todo-input"); // champ input
-const addBtn = document.querySelector("#btn"); // bouton ajouter
-const todoList = document.querySelector("#todo-list"); // liste des tâches
+import { getTasks, saveTasks, deleteTask } from './storage.js';
+import { loadSuggestions } from './api.js';
 
- // Récupérer les tâches sauvegardées dans localStorage
- // Si aucune tâche n'existe encore, on initialise avec un tableau vide
- let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const addtodo = document.querySelector("#todo-input");
+const addBtn = document.querySelector("#btn");
+const todoList = document.querySelector("#todo-list");
 
- // Afficher les tâches déjà sauvegardées au chargement
+let tasks = getTasks();
 
- tasks.forEach(function(texte) {
+tasks.forEach(text => addTaskToDOM(text));
 
-    // créer un élément li
+addBtn.addEventListener("click", () => {
+
+    const texte = addtodo.value.trim();
+    if (texte === "") return;
+
+    tasks.push(texte);
+
+    saveTasks(tasks);
+
+    addTaskToDOM(texte);
+
+    addtodo.value = "";
+});
+
+function addTaskToDOM(texte) {
+
     let li = document.createElement("li");
     li.textContent = texte;
 
-    // créer un bouton supprimer
     let btnDelete = document.createElement("button");
     btnDelete.classList.add("delete-btn");
     btnDelete.textContent = "supprimer";
 
-    // comportement du bouton supprimer
-    btnDelete.addEventListener("click", function(){
-   // supprimer la tâche du DOMli.remove();
+    btnDelete.addEventListener("click", () => {
 
-  // trouver la position de la tâche dans le tableau
-     const index = tasks.indexOf(texte);
+        li.remove();
 
-        // si la tâche existe dans le tableau
-        if(index > -1){
-            // la supprimer du tableau
-            tasks.splice(index,1);
+        const index = tasks.indexOf(texte);
 
-            // mettre à jour localStorage
-            localStorage.setItem("tasks", JSON.stringify(tasks));
+        if (index > -1) {
+            deleteTask(tasks, index);
         }
     });
 
-    // ajouter le bouton dans le li
     li.appendChild(btnDelete);
-
-    // ajouter le li dans la liste
     todoList.appendChild(li);
-})
+}
 
-   //Ajouter une nouvelle tâche
-
-    addBtn.addEventListener('click', function(){
-
-   // récupérer la valeur du champ input
-   const texte = addtodo.value.trim();
-
-   // si le champ est vide on ne fait rien
-   if (texte === "") return;
-
-   // créer un élément li
-   let li = document.createElement("li");
-
-   // ajouter le texte de la tâche
-   li.textContent = texte;
-
-   // créer le bouton supprimer
-   let btnDelete = document.createElement("button");
-   btnDelete.classList.add("delete-btn");
-   btnDelete.textContent = "supprimer";
-
-   // ajouter le comportement de suppression
-   btnDelete.addEventListener('click', function(){
-
-        // supprimer la tâche dans le DOM
-        li.remove();
-
-        // trouver l'index de la tâche dans le tableau
-        const index = tasks.indexOf(texte);
-
-        if (index > -1){
-            // supprimer la tâche du tableau
-            tasks.splice(index,1);
-
-            // mettre à jour localStorage
-            localStorage.setItem("tasks", JSON.stringify(tasks));
-        }
-        //localStorage = mémoire permanente du navigateur
-       // setItem → sauvegarder
-       // getItem → récupérer
-      // JSON.stringify → transformer en texte
-      // JSON.parse → retransformer en tableau
-
-   });
-
-   // ajouter le bouton dans le li
-   li.appendChild(btnDelete);
-                                   
-   // ajouter la tâche dans la liste
-   todoList.appendChild(li);
-
-   // ajouter la tâche dans le tableau
-   tasks.push(texte);
-
-   // sauvegarder le tableau dans localStorage
-   localStorage.setItem("tasks", JSON.stringify(tasks));
-
-   // vider le champ input
-   addtodo.value = "";
-});
+loadSuggestions(todoList);
