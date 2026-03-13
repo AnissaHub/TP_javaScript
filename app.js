@@ -15,7 +15,7 @@ const todoList = document.querySelector("#todo-list");
 let tasks = getTasks();
 
 // Afficher les tâches existantes au chargement de la page
-tasks.forEach(text => addTaskToDOM(text));
+tasks.forEach(tache => addTaskToDOM(tache));   // afficher chaque tâche
 
 // Événement quand l'utilisateur clique sur "Ajouter"
 addBtn.addEventListener("click", function() {
@@ -40,7 +40,7 @@ addBtn.addEventListener("click", function() {
 });
 
 // Fonction qui ajoute une tâche dans le DOM
-function addTaskToDOM(texte) {
+function addTaskToDOM(texte) {                    
 
     // Créer un élément <li>
     let li = document.createElement("li");
