@@ -25,7 +25,7 @@ Pour exécuter le projet sur votre ordinateur :
 
 3. **Lancer l'application** :  
    - Ouvrir le fichier **index.html** dans un navigateur (Chrome, Firefox, Edge)  
-   - Ou utiliser **Live Server** (extension VS Code) pour éviter les erreurs CORS lors des appels à l’API
+   - Ou utiliser l’extension **Live Server** pour éviter les problèmes liés aux appels API  
 
 4. Une fois l'application lancée, vous pouvez :  
    - **Ajouter** de nouvelles tâches  
